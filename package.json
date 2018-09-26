@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "Pin pad",
   "main": "index.js",
+  "otherscrips": {
+    "precommit": "cross-env npm run lint && npm test",
+    "prepush": "cross-env npm run lint && npm test"
+  },
   "scripts": {
     "start": "webpack-dev-server",
     "clean": "rimraf dist",
@@ -11,8 +15,6 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "coverage": "jest --coverage",
-    "precommit": "cross-env npm run lint && npm test",
-    "prepush": "cross-env npm run lint && npm test",
     "webpack:dev": "webpack --colors",
     "webpack:prod": "webpack --config webpack.production.config.js --colors",
     "heroku-postbuild": "npm run production"

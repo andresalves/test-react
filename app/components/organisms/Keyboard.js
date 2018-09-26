@@ -1,7 +1,9 @@
 import React from 'react';
-import Key from '../atoms/Key';
 import debounce from '../../util/util';
 import ResultMessagePin from '../atoms/ResultPin';
+import Keys from '../molecules/Keys';
+import Display from '../atoms/Display';
+import Locked from '../atoms/Locked';
 
 class Keyboard extends React.Component {
   constructor(props) {
@@ -16,8 +18,20 @@ class Keyboard extends React.Component {
     };
     this.pressKey = this.pressKey.bind(this);
     this.validatePin = this.validatePin.bind(this);
+    this.toggleMessageBlocked = this.toggleMessageBlocked.bind(this);
     this.showPin = debounce(this.showPin, 300);
-    this.toggleMessage = debounce(this.toggleMessage, 100);
+    this.toggleMessage = debounce(this.toggleMessage, 500);
+  }
+
+  toggleMessageBlocked() {
+    const { isBlocked } = this.state;
+
+    if (isBlocked) {
+      this.setState({
+        isBlocked: false,
+        countWrong: false,
+      });
+    }
   }
 
   toggleMessage() {
@@ -96,7 +110,7 @@ class Keyboard extends React.Component {
   }
 
   render() {
-    const { keys } = this.props;
+    const { keys, timeLocked, pinLength } = this.props;
     const {
       isBlocked,
       showMessage, valueView, isValid, countWrong,
@@ -106,19 +120,12 @@ class Keyboard extends React.Component {
       <div className="pin-pad">
         <div className="pin-pad__container">
           <div className="pin-pad__display">
-            {valueView}
+            <Display pinLength={pinLength} value={valueView}/>
           </div>
           <div className="pin-pad__keyboard">
-            {
-              keys.map((key) => {
-                return (
-                  <Key
-                    key={key}
-                    keyValue={key}
-                    action={this.pressKey}
-                  />);
-              })
-            }
+            <Keys
+              keys={keys}
+              action={this.pressKey}/>
           </div>
         </div>
         {
@@ -134,7 +141,7 @@ class Keyboard extends React.Component {
         {
           isBlocked && (
             <div className="pin-pad__message">
-              Locked for 30s
+              <Locked toggleMessageBlocked={this.toggleMessageBlocked} timeLocked={timeLocked}/>
             </div>
           )
         }

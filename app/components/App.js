@@ -1,11 +1,7 @@
 import React from 'react';
-import Keyboard from './molecules/Keyboard';
+import Keyboard from './organisms/Keyboard';
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handler = this.handler.bind(this);
-  }
 
   handler(pin) {
     console.log(pin);
@@ -17,13 +13,16 @@ class App extends React.Component {
       character: '*',
       pinLength: 4,
       userPin: '0000',
+      timeLocked: 30,
     };
     return (
-      <div>
-        <Keyboard
-          handler={this.handler}
-          {...settings}
-        />
+      <div className="app">
+        <div className="app__container">
+          <Keyboard
+            handler={this.handler}
+            {...settings}
+          />
+        </div>
       </div>
     );
   }

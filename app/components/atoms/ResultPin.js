@@ -2,8 +2,8 @@ import React from 'react';
 
 const ResultMessagePin = ({ isValid, wrongTimes }) => {
   return (
-    <div>
-      {isValid ? 'Ok' : `Error (${wrongTimes})`}
+    <div className="message">
+      <label className="message__value">{isValid ? 'Ok' : `Error (${wrongTimes})`}</label>
     </div>
   );
 };

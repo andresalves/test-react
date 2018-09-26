@@ -1,13 +1,14 @@
 $color: white;
 $color-keys: blue;
 $color-display: blue;
+$color-keyboard: #ededed;
 
 body {
   background-color: $color;
 }
 
-.pin-pad {
-  position: relative;
+.app {
+  background-color: $color;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -15,10 +16,14 @@ body {
   &__container {
     width: 300px;
   }
+}
+
+.pin-pad {
+  position: relative;
+  background-color: $color-keyboard;
 
   &__display {
-    height: 60px;
-    border: 1px red solid;
+    height: 80px;
     font-size: 30px;
     display: flex;
     align-items: center;
@@ -26,37 +31,48 @@ body {
   }
 
   &__message {
+    position: absolute;
     width: 100%;
     height: 100%;
-    position: absolute;
     display: flex;
     align-items: center;
     justify-content: center;
+    top: 0;
+    background-color: #ededed;
+    background-color: rgba(0, 0, 0, 0.3);
   }
 
   &__keyboard {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    justify-content: center;
-    border: 1px green solid;
     padding: 2px;
   }
 }
 
-.key {
-  height: 100px; //fix it
-  box-sizing: border-box;
-  flex: 0 0 33.3333%;
-  border-radius: 50%;
+.keys {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   justify-content: center;
 
+  &__key {
+    flex: 0 0 33.3333%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.key {
+  height: 90px;
+  box-sizing: border-box;
+  border-radius: 50%;
   font-size: 30px;
+  width: 100%;
+  margin: 5px;
+  background-color: $color-keyboard;
+  border-color: transparent;
 
   &:hover {
-    border: 1px solid #506CE8;
+    box-shadow: #506CE8 0 0 1px 1px;
   }
 
   &:active {
@@ -67,13 +83,36 @@ body {
   &:focus {
     outline: none;
   }
+}
 
-  &:nth-child(even) {
-    background: #23a;
-  }
+.message {
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-  &:nth-child(odd) {
-    background: #49b;
+  &__value {
+    margin: 10px 30px;
   }
 }
 
+.display {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  &__item {
+    width: 45px;
+    height: 45px;
+    border: 1px $color solid;
+    margin-right: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
