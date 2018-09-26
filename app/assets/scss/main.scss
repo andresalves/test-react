@@ -1,0 +1,79 @@
+$color: white;
+$color-keys: blue;
+$color-display: blue;
+
+body {
+  background-color: $color;
+}
+
+.pin-pad {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__container {
+    width: 300px;
+  }
+
+  &__display {
+    height: 60px;
+    border: 1px red solid;
+    font-size: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__message {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__keyboard {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    border: 1px green solid;
+    padding: 2px;
+  }
+}
+
+.key {
+  height: 100px; //fix it
+  box-sizing: border-box;
+  flex: 0 0 33.3333%;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 30px;
+
+  &:hover {
+    border: 1px solid #506CE8;
+  }
+
+  &:active {
+    background: #506CE8;
+    color: #fff;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &:nth-child(even) {
+    background: #23a;
+  }
+
+  &:nth-child(odd) {
+    background: #49b;
+  }
+}
+
