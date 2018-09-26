@@ -14,7 +14,7 @@ class Keyboard extends React.Component {
       valueModel: '',
       valueView: '',
       isValid: false,
-      countWrong: 0,
+      attempts: 0,
     };
     this.pressKey = this.pressKey.bind(this);
     this.validatePin = this.validatePin.bind(this);
@@ -29,27 +29,27 @@ class Keyboard extends React.Component {
     if (isBlocked) {
       this.setState({
         isBlocked: false,
-        countWrong: false,
+        attempts: false,
       });
     }
   }
 
   toggleMessage() {
-    const { countWrong } = this.state;
-    const isBlockedAux = countWrong === 3;
+    const { attempts } = this.state;
+    const isBlockedAux = attempts === 3;
     this.setState({
       showMessage: false,
       isBlocked: isBlockedAux,
-      countWrong: isBlockedAux ? 0 : countWrong,
+      attempts: isBlockedAux ? 0 : attempts,
     });
     // todo add interval to enable the pinpad
   }
 
   validatePin() {
     const { handler, userPin, pinLength } = this.props;
-    const { valueModel, countWrong } = this.state;
+    const { valueModel, attempts } = this.state;
     let isValid = false;
-    let count = countWrong;
+    let count = attempts;
     const valueLength = valueModel.length;
 
     if (valueLength === pinLength) {
@@ -66,7 +66,7 @@ class Keyboard extends React.Component {
 
       this.setState({
         isValid,
-        countWrong: count,
+        attempts: count,
         valueModel: '',
         valueView: '',
         showMessage: true,
@@ -80,13 +80,8 @@ class Keyboard extends React.Component {
     const valueLength = valueModel.length;
 
     if (valueLength < pinLength) {
-      let valueView = '';
-      for (let i = 0; i < valueLength; i++) {
-        valueView += character;
-      }
-
-      valueView += key;
-
+      const valueView = new Array(valueLength).fill(character)
+        .join('') + key;
       this.setState({
         valueView,
         valueModel: `${valueModel}${key}`,
@@ -97,12 +92,8 @@ class Keyboard extends React.Component {
   showPin() {
     const { valueModel } = this.state;
     const { character } = this.props;
-    const valueLength = valueModel.length;
-
-    let valueView = '';
-    for (let i = 0; i < valueLength; i++) {
-      valueView += character;
-    }
+    const valueView = new Array(valueModel.length).fill(character)
+      .join('');
 
     this.setState({
       valueView,
@@ -113,7 +104,7 @@ class Keyboard extends React.Component {
     const { keys, timeLocked, pinLength } = this.props;
     const {
       isBlocked,
-      showMessage, valueView, isValid, countWrong,
+      showMessage, valueView, isValid, attempts,
     } = this.state;
 
     return (
@@ -133,7 +124,7 @@ class Keyboard extends React.Component {
             <div className="pin-pad__message">
               <ResultMessagePin
                 isValid={isValid}
-                wrongTimes={countWrong}
+                wrongTimes={attempts}
               />
             </div>
           )
